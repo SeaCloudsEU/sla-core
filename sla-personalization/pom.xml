@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>eu.atos.sla</groupId>
+		<groupId>eu.seaclouds.sla</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -20,19 +20,19 @@
 		</dependency>
 		<!-- import SLA projects -->
 		<dependency>
-			<groupId>eu.atos.sla</groupId>
+			<groupId>eu.seaclouds.sla</groupId>
 			<artifactId>sla-enforcement</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>eu.atos.sla</groupId>
+			<groupId>eu.seaclouds.sla</groupId>
 			<artifactId>sla-repository</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>eu.atos.sla</groupId>
+			<groupId>eu.seaclouds.sla</groupId>
 			<artifactId>sla-tools</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 		</dependency>
