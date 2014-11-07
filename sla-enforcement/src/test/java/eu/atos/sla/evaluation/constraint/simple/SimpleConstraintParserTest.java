@@ -90,6 +90,16 @@ public class SimpleConstraintParserTest{
 		check(parser.parse("val NOT_EXISTS "), "val", Operator.NOT_EXISTS, "");
 	}
 	
+	@Test 
+	public void testParseWithExtendedNamesShouldPass() {
+		SimpleConstraintParser parser = new SimpleConstraintParser();
+
+		check(parser.parse("analytics_time LT 1"), "analytics_time", Operator.LT, "1");
+		check(parser.parse("nuro.analytics LT 1"), "nuro.analytics", Operator.LT, "1");
+		check(parser.parse("nuro.analytics_time LT 1"), "nuro.analytics_time", Operator.LT, "1");
+		check(parser.parse("a.b.c LT 1"), "a.b.c", Operator.LT, "1");
+	}
+	
 	@Test
 	public void testParseException() {
 		SimpleConstraintParser parser = new SimpleConstraintParser();
