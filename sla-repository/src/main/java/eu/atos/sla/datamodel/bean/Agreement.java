@@ -46,6 +46,7 @@ import eu.atos.sla.datamodel.ITemplate;
 		@NamedQuery(name = Agreement.QUERY_SEARCH, query = "SELECT a FROM Agreement a "
 				+ "WHERE (:providerId is null or a.provider.uuid = :providerId) "
 				+ "AND (:consumerId is null or a.consumer = :consumerId) "
+				+ "AND (:templateId is null or a.template.uuid = :templateId) "
 				+ "AND (:active is null "
 				+ "    or (:active = true and a.expirationDate > current_timestamp()) "
 				+ "    or (:active = false and a.expirationDate <= current_timestamp()))") })
