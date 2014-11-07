@@ -26,10 +26,10 @@ _configuration.properties_ file)
 
 ###1. <a name="download"> Download the project </a> ###
 
-Download the project using a subversion client from 
-[sla core repository](http://atossla.atosresearch.eu/svn/atossla)
+Download the project using a git client from 
+[sla core repository](https://github.com/SeaCloudsEU/sla-core.git)
 
-	$ svn co http://atossla.atosresearch.eu/svn/atossla
+	$ git clone https://github.com/SeaCloudsEU/sla-core.git
 	
 The directories follow the standard convention in subversion repositories:
 	
@@ -86,7 +86,7 @@ files executing this:
 
 The previous command is going to generate the eclipse project files: 
 .settings, .classpath, and .project. Again, please never upload those 
-files to the svn, it is going to deconfigure the eclipse of other 
+files to the repository, it is going to deconfigure the eclipse of other 
 developers (it is easy to fix, just an annoying waste of time).
 
 After it, from your eclipse you can import the project. Go to 
