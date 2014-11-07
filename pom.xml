@@ -21,6 +21,42 @@
 		<hibernate-version>4.2.3.Final</hibernate-version>
 	</properties>
 
+	<build>
+		<plugins>
+			<!--
+				mvn license:check to check all files are licensed
+				mvn license:format to add license to files w/o license
+			-->
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<header>${project.basedir}/LICENSE-header.txt</header>
+					<properties>
+						<organization>Atos</organization>
+						<year>2014</year>
+						<owner>Atos</owner>
+						<email>roman.sosa@atos.net</email>
+					</properties>
+					<excludes>
+						<exclude>**/README.md</exclude>
+						<exclude>src/test/resources/**</exclude>
+						<exclude>src/main/resources/**</exclude>
+						<exclude>LICENSE.txt</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
