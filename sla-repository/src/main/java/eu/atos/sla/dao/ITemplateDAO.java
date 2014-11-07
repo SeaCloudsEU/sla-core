@@ -31,31 +31,13 @@ public interface ITemplateDAO  {
 	public ITemplate getByUuid(String uuid);
 
 	/**
-	 * Returns the Template from the database by provider UUID
-	 * 
-	 * @param provider
-	 *            Uuid of the Template
-	 * @return the corresponding Template from the database
-	 */
-	public List<ITemplate> getByProvider(String providerUuid);
-
-	/**
-	 * Returns the Template from the database by service Id
-	 * 
-	 * @param service Id of the Template
-	 * @return the corresponding Template from the database
-	 */
-	public List<ITemplate> getByServiceId (String serviceId);
-
-	
-	/**
 	 * Returns the Template from the database by service Id
 	 *
-	 * @param providerUuid of the Template
-	 * @param service Id of the Template
+	 * @param providerId of the Template
+	 * @param serviceIds list of serviceId's of the Template
 	 * @return the corresponding Template from the database
 	 */
-	public List<ITemplate> getByProviderAndServiceId (String providerUuid, String serviceId);
+	public List<ITemplate> search(String providerUuid, String []serviceIds);
 	
 	
 	

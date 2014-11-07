@@ -33,9 +33,10 @@ public interface IAgreementDAO {
 	 * Returns the agreements that match the parameters
 	 * @param consumerId match consumerId if not null
 	 * @param providerId match providerId if not null
+	 * @param templateId match templateId if not null
 	 * @param active match non-expired if not null
 	 */
-	public List<IAgreement> search(String consumerId, String providerId, Boolean active);
+	public List<IAgreement> search(String consumerId, String providerId, String templateId, Boolean active);
 
 	/**
 	 * Returns Active Agreement from the database

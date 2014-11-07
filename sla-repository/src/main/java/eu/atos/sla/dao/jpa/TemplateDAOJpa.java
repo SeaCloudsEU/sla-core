@@ -1,6 +1,7 @@
 package eu.atos.sla.dao.jpa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ import eu.atos.sla.datamodel.bean.Template;
 
 @Repository("TemplateRepository")
 public class TemplateDAOJpa implements ITemplateDAO {
-	private static Logger logger = Logger.getLogger(TemplateDAOJpa.class);
+	private static Logger logger = LoggerFactory.getLogger(TemplateDAOJpa.class);
 	private EntityManager entityManager;
 
 	@PersistenceContext(unitName = "slarepositoryDB")
@@ -53,47 +55,15 @@ public class TemplateDAOJpa implements ITemplateDAO {
 		}
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public List<ITemplate> getByProvider(String providerUuid) {
-		try {
-			TypedQuery<ITemplate> query = entityManager.createNamedQuery(
-					Template.QUERY_FIND_BY_PROVIDER, ITemplate.class);
-			query.setParameter("providerUuid", providerUuid);
-			List<ITemplate> templates = new ArrayList<ITemplate>();
-			templates = (List<ITemplate>) query.getResultList();
-			return templates;
-		} catch (NoResultException e) {
-			logger.debug("No Result found: " + e);
-			return null;
-		}
-
-	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public List<ITemplate> getByServiceId(String serviceId) {
-
+	public List<ITemplate> search(String providerId, String []serviceIds) {
 		TypedQuery<ITemplate> query = entityManager.createNamedQuery(
-				Template.QUERY_FIND_BY_SERVICEID, ITemplate.class);
-		query.setParameter("serviceId", serviceId);
-		List<ITemplate> templates = new ArrayList<ITemplate>();
-		templates = (List<ITemplate>) query.getResultList();
-
-		if (templates != null) {
-			logger.debug("Number of templates:" + templates.size());
-		} else {
-			logger.debug("No Result found.");
-		}
-
-		return templates;
-	}
-
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public List<ITemplate> getByProviderAndServiceId(String providerUuid, String serviceId) {
-
-		TypedQuery<ITemplate> query = entityManager.createNamedQuery(
-				Template.QUERY_FIND_BY_PROVIDER_AND_SERVICEID, ITemplate.class);
-		query.setParameter("providerUuid", providerUuid);
-		query.setParameter("serviceId", serviceId);
+				Template.QUERY_SEARCH, ITemplate.class);
+		query.setParameter("providerId", providerId);
+		query.setParameter("serviceIds", (serviceIds!=null)?Arrays.asList(serviceIds):null);
+		query.setParameter("flagServiceIds", (serviceIds!=null)?"flag":null);
+		logger.debug("providerId:{} - serviceIds:{}" , providerId, (serviceIds!=null)?Arrays.asList(serviceIds):null);
 		List<ITemplate> templates = new ArrayList<ITemplate>();
 		templates = (List<ITemplate>) query.getResultList();
 
@@ -174,13 +144,12 @@ public class TemplateDAOJpa implements ITemplateDAO {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean delete(ITemplate template) {
 		try {
-			Template templateDeleted = entityManager.getReference(
-					Template.class, template.getId());
+			Template templateDeleted = entityManager.getReference(Template.class, template.getId());
 			entityManager.remove(templateDeleted);
 			entityManager.flush();
 			return true;
 		} catch (EntityNotFoundException e) {
-			logger.debug(e);
+			logger.debug("Template[{}] not found", template.getId());
 			return false;
 		}
 	}
