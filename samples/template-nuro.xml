@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:Template xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu" wsag:TemplateId="template-nuro">
+	<wsag:Name>Template-Nuro</wsag:Name>
+	<wsag:Context>
+	    <wsag:AgreementResponder>nuro</wsag:AgreementResponder>
+		<wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
+		<sla:Service xmlns:sla="http://sla.atos.eu">seaclouds</sla:Service>
+	</wsag:Context>
+	<wsag:Terms>
+		<wsag:All>
+			<wsag:ServiceProperties wsag:Name="NonFunctional" wsag:ServiceName="default">
+				<wsag:Variables>
+					<wsag:Variable wsag:Name="ResponseTime" wsag:Metric="xs:double">
+						<wsag:Location>qos:ResponseTime</wsag:Location>
+					</wsag:Variable>
+					<wsag:Variable wsag:Name="AnalyticsTime" wsag:Metric="xs:double">
+						<wsag:Location>nuro.analytics_time</wsag:Location>
+					</wsag:Variable>
+				</wsag:Variables>
+			</wsag:ServiceProperties>
+			<wsag:GuaranteeTerm wsag:Name="GT_AnalyticsTime">
+				<wsag:ServiceScope wsag:ServiceName="default">$application_id</wsag:ServiceScope>
+				<wsag:ServiceLevelObjective>
+					<wsag:KPITarget>
+						<wsag:KPIName>AnalyticsTime</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint" : "nuro.analytics_time LT 1"}</wsag:CustomServiceLevel>
+					</wsag:KPITarget>
+				</wsag:ServiceLevelObjective>
+			</wsag:GuaranteeTerm>
+		</wsag:All>
+	</wsag:Terms>
+</wsag:Template>
