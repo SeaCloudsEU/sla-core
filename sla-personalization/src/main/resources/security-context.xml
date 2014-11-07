@@ -13,7 +13,7 @@
 		
 	<!-- Security configuration for REST services. --> 
 	<security:http entry-point-ref="authenticationEntryPoint" create-session="stateless">
-		<security:intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN"/>
+		<security:intercept-url pattern="secure/**" access="ROLE_USER, ROLE_ADMIN"/>
 		<security:custom-filter ref="basicAuthenticationFilter" before="PRE_AUTH_FILTER" />
 	</security:http>
 	

@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import com.sun.jersey.core.util.UnmodifiableMultivaluedMap;
 
@@ -24,17 +26,11 @@ import eu.atos.sla.monitoring.IMonitoringMetric;
 
 public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 	
-	private final String brooklynUrl;
 	private final SensorClient client;
 
-	public BrooklynMetricsRetrieverV1(String brooklynUrl, SensorClient client) {
+	public BrooklynMetricsRetrieverV1(SensorClient client) {
 		super();
-		this.brooklynUrl = brooklynUrl;
 		this.client = client;
-	}
-
-	public String getBrooklynUrl() {
-		return brooklynUrl;
 	}
 
 	@Override
@@ -91,6 +87,13 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 
 		private final WebResource rootResource;
 		
+		/*
+		 * Just an utility constructor
+		 */
+		public SensorClient(String brooklynUrl) {
+			this(buildJerseyClient(), brooklynUrl);
+		}
+
 		public SensorClient(Client client, String brooklynUrl) {
 			this.brooklynUrl = brooklynUrl;
 			
@@ -132,6 +135,12 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 			}
 			String result = response.getEntity(String.class);
 			return result;
+		}
+
+		private static Client buildJerseyClient() {
+			ClientConfig config = new DefaultClientConfig();
+			Client jerseyClient = Client.create(config);
+			return jerseyClient;
 		}
 		
 		private WebResource.Builder applyHeaders(WebResource.Builder builder,

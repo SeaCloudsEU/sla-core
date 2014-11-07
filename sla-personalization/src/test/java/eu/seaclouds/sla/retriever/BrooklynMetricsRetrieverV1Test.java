@@ -1,6 +1,7 @@
 package eu.seaclouds.sla.retriever;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.Collections;
 import java.util.Date;
@@ -15,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.IfProfileValue;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sun.jersey.api.client.Client;
@@ -52,7 +52,7 @@ public class BrooklynMetricsRetrieverV1Test {
 	private static final String BROOKLYN_APP = "BROOKLYN_APP";
 	private static final String BROOKLYN_URL = "BROOKLYN_URL";
 	
-	private SensorClient client;
+	private SensorClient sensorClient;
 	private String brooklynUrl;
 	private String brooklynApp;
 	private String brooklynEntity;
@@ -76,7 +76,7 @@ public class BrooklynMetricsRetrieverV1Test {
 
 		ClientConfig config = new DefaultClientConfig();
 		Client jerseyClient = Client.create(config);
-		client = new SensorClient(jerseyClient, brooklynUrl);
+		sensorClient = new SensorClient(jerseyClient, brooklynUrl);
 	}
 
 	@After
@@ -87,7 +87,7 @@ public class BrooklynMetricsRetrieverV1Test {
 	@Test
 	public void testGetMetricsShouldPass() {
 		
-		BrooklynMetricsRetrieverV1 retriever = new BrooklynMetricsRetrieverV1(brooklynUrl, client);
+		BrooklynMetricsRetrieverV1 retriever = new BrooklynMetricsRetrieverV1(sensorClient);
 		
 		final String agreementId = brooklynApp;
 		final String variable = brooklynSensor;
