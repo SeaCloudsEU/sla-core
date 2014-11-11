@@ -17,7 +17,7 @@
        limitations under the License.
 
 -->
-<wsag:Agreement xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu" wsag:AgreementId="LVgsNCQq">
+<wsag:Agreement xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu" wsag:AgreementId="${application}">
 	<wsag:Name>Agreement-Nuro</wsag:Name>
 	<wsag:Context>
 		<wsag:AgreementInitiator>client-prueba</wsag:AgreementInitiator>
@@ -39,12 +39,30 @@
 					</wsag:Variable>
 				</wsag:Variables>
 			</wsag:ServiceProperties>
-			<wsag:GuaranteeTerm wsag:Name="GT_AnalyticsTime">
-				<wsag:ServiceScope wsag:ServiceName="default">xWl8pC0Y</wsag:ServiceScope>
+			<wsag:GuaranteeTerm wsag:Name="AnalyticsTime">
+				<wsag:ServiceScope wsag:ServiceName="default">${entity}</wsag:ServiceScope>
 				<wsag:ServiceLevelObjective>
 					<wsag:KPITarget>
 						<wsag:KPIName>AnalyticsTime</wsag:KPIName>
-						<wsag:CustomServiceLevel>{"constraint" : "nuro.analytics_time LT 1"}</wsag:CustomServiceLevel>
+						<wsag:CustomServiceLevel>{"constraint" : "nuro.analytics_time LT 0.6"}</wsag:CustomServiceLevel>
+					</wsag:KPITarget>
+				</wsag:ServiceLevelObjective>
+			</wsag:GuaranteeTerm>
+			<wsag:GuaranteeTerm wsag:Name="HourRuntime">
+				<wsag:ServiceScope wsag:ServiceName="default">${entity}</wsag:ServiceScope>
+				<wsag:ServiceLevelObjective>
+					<wsag:KPITarget>
+						<wsag:KPIName>HourRuntime</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint" : "nuro.hour.avg_run_time LT 0.5"}</wsag:CustomServiceLevel>
+					</wsag:KPITarget>
+				</wsag:ServiceLevelObjective>
+			</wsag:GuaranteeTerm>
+			<wsag:GuaranteeTerm wsag:Name="MinuteRuntime">
+				<wsag:ServiceScope wsag:ServiceName="default">${entity}</wsag:ServiceScope>
+				<wsag:ServiceLevelObjective>
+					<wsag:KPITarget>
+						<wsag:KPIName>MinuteRuntime</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint" : "nuro.minute.avg_run_time LT 0.5"}</wsag:CustomServiceLevel>
 					</wsag:KPITarget>
 				</wsag:ServiceLevelObjective>
 			</wsag:GuaranteeTerm>
