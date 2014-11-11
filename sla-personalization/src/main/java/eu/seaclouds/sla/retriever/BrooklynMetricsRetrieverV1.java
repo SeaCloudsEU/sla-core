@@ -26,7 +26,8 @@ import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -53,8 +54,6 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 	public List<IMonitoringMetric> getMetrics(String agreementId,
 			String serviceScope, String variable, Date begin, Date end,
 			int maxResults) {
-		
-//		http://192.168.56.101:8081/v1/applications/lawwg97z/entities/m46bD8KT/sensors/nuro.analytics_time
 		
 		String entityId = parseEntityIdFromScope(serviceScope);
 
@@ -97,7 +96,7 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 		public static final MultivaluedMap<String, String> EMPTY_MAP =
 				new UnmodifiableMultivaluedMap<String, String>(new MultivaluedMapImpl());
 		
-		private final Logger logger = Logger.getLogger(SensorClient.class);
+		private final Logger logger = LoggerFactory.getLogger(SensorClient.class);
 		
 		private final String brooklynUrl;
 

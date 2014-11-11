@@ -24,13 +24,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -61,7 +62,7 @@ import eu.seaclouds.sla.retriever.BrooklynMetricsRetrieverV1.SensorClient;
 @RunWith(SpringJUnit4ClassRunner.class)
 @IfProfileValue(name="test-profile", value="IntegrationTest")
 public class BrooklynMetricsRetrieverV1Test {
-	private Logger logger = Logger.getLogger(BrooklynMetricsRetrieverV1Test.class);
+	private Logger logger = LoggerFactory.getLogger(BrooklynMetricsRetrieverV1Test.class);
 	
 	private static final String BROOKLYN_SENSOR = "BROOKLYN_SENSOR";
 	private static final String BROOKLYN_ENTITY = "BROOKLYN_ENTITY";
