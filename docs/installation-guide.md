@@ -4,7 +4,6 @@
 * [Installation](#installation)
 	* [Download the project](#download)
 	* [Creating the mysql database](#database)
-	* [Importing the code into eclipse](#importeclipse)
 * [Configuration](#configuration)
 * [Running](#running)
 * [Testing](#testing)
@@ -30,23 +29,6 @@ Download the project using a git client from
 [sla core repository](https://github.com/SeaCloudsEU/sla-core.git)
 
 	$ git clone https://github.com/SeaCloudsEU/sla-core.git
-	
-The directories follow the standard convention in subversion repositories:
-	
-	atossla/
-		trunk/
-		branches/
-			branch1/
-			...
-		tags/
-			0.0.1/
-			0.0.2/
-			0.1.0/
-
-It is recommended to checkout the latest released version 
-if developing for a specific project. So, if 0.1.0 version wants to be checked out:
-
-	$ svn co http://atossla.atosresearch.eu/svn/atossla/tags/0.1.0
 
 ###2. <a name="database"> Creating the mysql database </a> ###
 
@@ -73,26 +55,6 @@ project root directory:
 The names used here are the default values of the sla core. See 
 [configuration](#configuration) to know how to change the values.
 
-###3. <a name="importeclipse"> Importing the code into eclipse </a> ###
-
-The core of the ATOSSLA has been developed using the Eclipse Java IDE, 
-although others Java editors could be used, here we only provide the 
-instructions about how to import the code into Eclipse.
-
-The first step is to tell Maven to create the necessary Eclipse project 
-files executing this:
-
-	$ mvn eclipse:eclipse
-
-The previous command is going to generate the eclipse project files: 
-.settings, .classpath, and .project. Again, please never upload those 
-files to the repository, it is going to deconfigure the eclipse of other 
-developers (it is easy to fix, just an annoying waste of time).
-
-After it, from your eclipse you can import the project. Go to 
-"import project from file", go to the trunk folder, and you should 
-see the "ATOSSLA" project ready to be imported in your Eclipse. 
-
 ## <a name="configuration"> Configuration </a> ##
 
 The project is made up of five main modules:
@@ -118,7 +80,10 @@ Several parameters can be configured through this file.
 1. enforcement.\* several parameters from the enforcement can be customized,
 1. service.basicsecurity.\* basic security is enabled
    These parameters can be used to set the user name and password to access to the rest services.
-1.   ''parser.*'' different parsers can be implemented for the agreement and template. By default, wsag standard parsers are have been implemented and configured in the file. Also dateformat can be configured.
+1.   ''parser.*'' different parsers can be implemented for the agreement and template. 
+   By default, wsag standard parsers are have been implemented and configured in the file. Also dateformat can be 
+   configured.
+1. brooklyn.url. Url where Brooklyn is deployed.
 
 ## <a name="compiling"> Compiling </a> ##
 	
@@ -153,6 +118,7 @@ parameters overridable is:
 * `DB_USERNAME`; default value is `${db.username}`
 * `DB_PASSWORD`; default value is `${db.password}`
 * `DB_SHOWSQL`; default value is `${db.showSQL}`
+* `BROOKLYN_URL`; default value is `${brooklyn.url}`
 
 F.e., to use a different database configuration:
 
