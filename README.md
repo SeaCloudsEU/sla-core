@@ -36,9 +36,9 @@ The steps are:
 
 Licensed under the [Apache License, Version 2.0][8]
 
-[1]: doc/TOC.md
-[2]: doc/developer-guide.md
-[3]: doc/installation-guide.md
+[1]: docs/TOC.md
+[2]: docs/developer-guide.md
+[3]: docs/installation-guide.md
 [4]: https://github.com/SeaCloudsEU/incubator-brooklyn
 [5]: samples/nuro-v1.1.yaml
 [8]: http://www.apache.org/licenses/LICENSE-2.0
