@@ -20,16 +20,16 @@ if [ "$0" != "bin/load-nuro-samples.sh" ]; then
 	exit 1
 fi
 
-if [ $# -lt 2 ]; then
-	echo "Usage: $0 <application_id> <entity_id>"
-	exit 1
-fi
-
 SLA_MANAGER_URL="http://localhost:8080/sla-service"
 
 curl -X POST $SLA_MANAGER_URL/providers -d@"samples/provider-nuro.xml" -H"Content-type: application/xml" -u user:password
 
 curl -X POST $SLA_MANAGER_URL/templates -d@"samples/template-nuro.xml" -H"Content-type: application/xml" -u user:password
+
+if [ $# -lt 2 ]; then
+	exit 0
+fi
+
 
 AGREEMENT=$(mktemp --tmpdir agreement-nuro.XXX)
 

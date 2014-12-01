@@ -31,6 +31,8 @@ The steps are:
 1. Run Sla Core. For example: `$ BROOKLYN_URL=http://localhost:8082 bin/runserver`
 1. Load agreement. `$ bin/load-nuro-samples.sh <app-id> <apache-entity-id>`, where app-id and apache-entity-id are 
    the brooklyn ids of the application and apache server, respectively.
+   If <app-id> and <apache-entity-id> are not given, only a template with TemplateId `nuro-template` is 
+   loaded. You can use the sla-dashboard REST facade to generate an agreement. See sla-dashboard docs.
 
 ##License##
 
