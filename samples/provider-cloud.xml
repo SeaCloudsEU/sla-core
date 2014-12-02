@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2014 Atos
@@ -16,7 +17,7 @@
        limitations under the License.
 
 -->
-<enforcement_job>
-    <agreement_id>agreement01</agreement_id>
-    <enabled>false</enabled>
-</enforcement_job>
+<provider>
+    <uuid>cloud</uuid>
+    <name>cloud</name>
+</provider>

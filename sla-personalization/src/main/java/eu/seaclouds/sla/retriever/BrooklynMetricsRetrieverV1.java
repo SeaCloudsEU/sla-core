@@ -55,9 +55,11 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 			String serviceScope, String variable, Date begin, Date end,
 			int maxResults) {
 		
-		String entityId = parseEntityIdFromScope(serviceScope);
+		String[] parsedScope = parseScope(serviceScope);
+		String applicationId = parsedScope[0];
+		String entityId = parsedScope[1];
 
-		String metricValue = client.getSensorValue(agreementId, entityId, variable);
+		String metricValue = client.getSensorValue(applicationId, entityId, variable);
 		
 		IMonitoringMetric metric = new MonitoringMetric(variable, metricValue, new Date());
 		
@@ -87,9 +89,14 @@ public class BrooklynMetricsRetrieverV1 implements IMetricsRetrieverV2 {
 		return result;
 	}
 	
-	private String parseEntityIdFromScope(String serviceScope) {
+	private String[] parseScope(String serviceScope) {
+
+		String[] result = serviceScope.split("/", 2);
 		
-		return serviceScope;
+		if (result.length != 2) {
+			result = new String[] { "", "" };
+		}
+		return result;
 	}
 
 	public static class SensorClient {

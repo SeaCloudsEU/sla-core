@@ -17,11 +17,11 @@
        limitations under the License.
 
 -->
-<wsag:Template xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu" wsag:TemplateId="nuro-template">
-	<wsag:Name>Nuro</wsag:Name>
+<wsag:Template xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu" wsag:TemplateId="nuro-cloud-template">
+	<wsag:Name>NuroCloudTemplate</wsag:Name>
 	<wsag:Context>
-		<wsag:AgreementInitiator>${consumer}</wsag:AgreementInitiator>
-		<wsag:AgreementResponder>nuro</wsag:AgreementResponder>
+		<wsag:AgreementInitiator>nuro</wsag:AgreementInitiator>
+		<wsag:AgreementResponder>cloud</wsag:AgreementResponder>
 		<wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
 		<wsag:TemplateId>${templateid}</wsag:TemplateId>
 		<sla:Service xmlns:sla="http://sla.atos.eu">seaclouds</sla:Service>
@@ -30,17 +30,17 @@
 		<wsag:All>
 			<wsag:ServiceProperties wsag:Name="NonFunctional" wsag:ServiceName="default">
 				<wsag:VariableSet>
-					<wsag:Variable wsag:Name="nuro.minute.avg_run_time" wsag:Metric="xs:double">
-						<wsag:Location>nuro.minute.avg_run_time</wsag:Location>
+					<wsag:Variable wsag:Name="nuro.database.ping" wsag:Metric="xs:double">
+						<wsag:Location>nuro.database.ping</wsag:Location>
 					</wsag:Variable>
 				</wsag:VariableSet>
 			</wsag:ServiceProperties>
-			<wsag:GuaranteeTerm wsag:Name="MinuteAvgRunTime">
+			<wsag:GuaranteeTerm wsag:Name="DatabasePing">
 				<wsag:ServiceScope wsag:ServiceName="default">${application}/${entity}</wsag:ServiceScope>
 				<wsag:ServiceLevelObjective>
 					<wsag:KPITarget>
-						<wsag:KPIName>Average runtime per minute</wsag:KPIName>
-						<wsag:CustomServiceLevel>{"constraint" : "nuro.minute.avg_run_time LT 1.5"}</wsag:CustomServiceLevel>
+						<wsag:KPIName>Database access time</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint" : "nuro.database.ping LT 1"}</wsag:CustomServiceLevel>
 					</wsag:KPITarget>
 				</wsag:ServiceLevelObjective>
 			</wsag:GuaranteeTerm>

@@ -29,11 +29,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.IfProfileValue;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -55,11 +53,10 @@ import eu.seaclouds.sla.retriever.BrooklynMetricsRetrieverV1.SensorClient;
  * <li>BROOKLYN_SENSOR: Brooklyn sensor id
  * 
  * To run:
- *  mvn test -Dtest-profile=IntegrationTest
+ *  mvn test -Dtest-profile=IntegrationTest -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
  * @author rsosa
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @IfProfileValue(name="test-profile", value="IntegrationTest")
 public class BrooklynMetricsRetrieverV1Test {
 	private Logger logger = LoggerFactory.getLogger(BrooklynMetricsRetrieverV1Test.class);
@@ -106,10 +103,10 @@ public class BrooklynMetricsRetrieverV1Test {
 		
 		BrooklynMetricsRetrieverV1 retriever = new BrooklynMetricsRetrieverV1(sensorClient);
 		
-		final String agreementId = brooklynApp;
+		final String agreementId = "agreement";
 		final String variable = brooklynSensor;
 		final IGuaranteeTerm term = new GuaranteeTerm();
-		term.setServiceScope(brooklynEntity);
+		term.setServiceScope(brooklynApp + "/" + brooklynEntity);
 		
 		RetrievalItem item = buildRetrievalItem(variable, term);
 		List<RetrievalItem> retrievalItems = Collections.singletonList(item);

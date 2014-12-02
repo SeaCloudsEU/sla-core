@@ -22,9 +22,17 @@ fi
 
 SLA_MANAGER_URL="http://localhost:8080/sla-service"
 
+echo -e "\n###POST provider-nuro"
 curl -X POST $SLA_MANAGER_URL/providers -d@"samples/provider-nuro.xml" -H"Content-type: application/xml" -u user:password
 
+echo -e "\n###POST provider-cloud"
+curl -X POST $SLA_MANAGER_URL/providers -d@"samples/provider-cloud.xml" -H"Content-type: application/xml" -u user:password
+
+echo -e "\n###POST template-nuro"
 curl -X POST $SLA_MANAGER_URL/templates -d@"samples/template-nuro.xml" -H"Content-type: application/xml" -u user:password
+
+echo -e "\n###POST template-cloud"
+curl -X POST $SLA_MANAGER_URL/templates -d@"samples/template-nuro-cloud.xml" -H"Content-type: application/xml" -u user:password
 
 if [ $# -lt 2 ]; then
 	exit 0
@@ -39,4 +47,4 @@ sed -i -e "s/\${application}/$1/" -e "s/\${entity}/$2/" "$AGREEMENT"
 
 curl -X POST $SLA_MANAGER_URL/agreements -d@"$AGREEMENT" -H"Content-type: application/xml" -u user:password
 
-curl -X PUT $SLA_MANAGER_URL/enforcements/$1/start -u user:password
+curl -X PUT $SLA_MANAGER_URL/enforcements/nuro-agreement/start -u user:password
