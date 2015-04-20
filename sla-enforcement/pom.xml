@@ -20,8 +20,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>eu.seaclouds.sla</groupId>
-		<artifactId>parent</artifactId>
+		<groupId>eu.seaclouds-project</groupId>
+		<artifactId>sla</artifactId>
 		<version>0.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
@@ -109,13 +109,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>eu.seaclouds.sla</groupId>
+			<groupId>eu.seaclouds-project</groupId>
 			<artifactId>sla-repository</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>eu.seaclouds.sla</groupId>
+			<groupId>eu.seaclouds-project</groupId>
 			<artifactId>sla-repository</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 			<type>test-jar</type>
