@@ -58,8 +58,8 @@ import eu.seaclouds.sla.retriever.BrooklynMetricsRetrieverV1.SensorClient;
  *
  */
 @IfProfileValue(name="test-profile", value="IntegrationTest")
-public class BrooklynMetricsRetrieverV1Test {
-	private Logger logger = LoggerFactory.getLogger(BrooklynMetricsRetrieverV1Test.class);
+public class BrooklynMetricsRetrieverV1IntegrationTest {
+	private Logger logger = LoggerFactory.getLogger(BrooklynMetricsRetrieverV1IntegrationTest.class);
 	
 	private static final String BROOKLYN_SENSOR = "BROOKLYN_SENSOR";
 	private static final String BROOKLYN_ENTITY = "BROOKLYN_ENTITY";
