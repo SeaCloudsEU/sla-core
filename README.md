@@ -22,19 +22,14 @@ Read the [Developer Guide][2]
 
 Read the [Installation Guide][3]
 
-##Nuro example##
+##Duke example##
 
-The SLA Core has been tested with a running brooklyn which has deployed Nuro's Sensor.
+As part of the first integrated platform, the SLA Service reads a pregenerated agreement.
 
-The steps are:
+The agreement and monitoring rules for the Duke example are located in samples/. To store the agreement 
+and rules:
 
-1. Deploy [Brooklyn][4]
-1. Deploy Nuro Sensor. The following yaml file was used: [Nuro Sensor Blueprint][5]
-1. Run Sla Core. For example: `$ BROOKLYN_URL=http://localhost:8082 bin/runserver`
-1. Load agreement. `$ bin/load-nuro-samples.sh <app-id> <apache-entity-id>`, where app-id and apache-entity-id are 
-   the brooklyn ids of the application and apache server, respectively.
-   If <app-id> and <apache-entity-id> are not given, only a template with TemplateId `nuro-template` is 
-   loaded. You can use the sla-dashboard REST facade to generate an agreement. See sla-dashboard docs.
+    $ curl http://localhost:8080/sla-service/seaclouds/agreements -X POST -F sla=@"samples/duke-agreement.xml" -F rules=@"samples/duke-rules.xml"
 
 ##License##
 
@@ -43,6 +38,4 @@ Licensed under the [Apache License, Version 2.0][8]
 [1]: docs/TOC.md
 [2]: docs/developer-guide.md
 [3]: docs/installation-guide.md
-[4]: https://github.com/SeaCloudsEU/incubator-brooklyn
-[5]: samples/nuro-v1.1.yaml
 [8]: http://www.apache.org/licenses/LICENSE-2.0
