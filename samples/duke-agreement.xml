@@ -1,0 +1,40 @@
+<wsag:Agreement xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement" xmlns:sla="http://sla.atos.eu">
+	<wsag:Name>DukeCaseStudy</wsag:Name>
+	<wsag:Context>
+		<wsag:AgreementInitiator>client</wsag:AgreementInitiator>
+		<wsag:AgreementResponder>seaclouds</wsag:AgreementResponder>
+		<wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
+		<sla:Service xmlns:sla="http://sla.atos.eu">duke</sla:Service>
+	</wsag:Context>
+	<wsag:Terms>
+		<wsag:All>
+			<wsag:ServiceProperties wsag:Name="NonFunctional" wsag:ServiceName="default">
+				<wsag:VariableSet>
+					<wsag:Variable wsag:Name="ResponseTime" wsag:Metric="xs:double">
+						<wsag:Location></wsag:Location>
+					</wsag:Variable>
+					<wsag:Variable wsag:Name="AppAvailable" wsag:Metric="xs:double">
+						<wsag:Location></wsag:Location>
+					</wsag:Variable>
+				</wsag:VariableSet>
+			</wsag:ServiceProperties>
+			<wsag:GuaranteeTerm wsag:Name="ResponseTimeGT">
+				<wsag:ServiceLevelObjective>
+					<wsag:KPITarget>
+						<wsag:KPIName>ResponseTime</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint": "ResponseTimeViolated", "qos" : "ResponseTime LT 1.5"}</wsag:CustomServiceLevel>
+					</wsag:KPITarget>
+				</wsag:ServiceLevelObjective>
+			</wsag:GuaranteeTerm>
+			<wsag:GuaranteeTerm wsag:Name="AppAvailableGT">
+				<wsag:ServiceLevelObjective>
+					<wsag:KPITarget>
+						<wsag:KPIName>AppAvailable</wsag:KPIName>
+						<wsag:CustomServiceLevel>{"constraint": "AppAvailableViolated", "qos" : "AppAvailable GT 0.99"}</wsag:CustomServiceLevel>
+					</wsag:KPITarget>
+				</wsag:ServiceLevelObjective>
+			</wsag:GuaranteeTerm>
+		</wsag:All>
+	</wsag:Terms>
+</wsag:Agreement>
+
