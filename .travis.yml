@@ -1,7 +1,12 @@
 language: java
-script: mvn clean install
+before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
+script: "mvn deploy --settings target/travis/settings.xml"
 sudo: false
 
 branches:
   except:
     - travis
+env:
+  global:
+    - secure: "auFWl0CKlcbzHf/8wFs+C6inEYJUlHLVJJlN7VXie6ZZ1UFrr484WePuo8SgscKL2SUKsNLXVUiibuXDzF3dZlkVqNW+O8y+KLk9XMdQNFaVoJ0PlY1W9OrghopehTLplTufrUKw2/InqDwRGofrsJo79HFEEyvIZGbcBsGRpYc="
+    - secure: "aQMvXS9f+FflP9GCvptiulHOuw+AjWQ0ed6F+AlpzHS3cWzi/x66q8zhtasY35wSdSzmSYpkL4VP0xd9lkNZJXalFzjh0c9owzPA7knwcgb0wo4iaK70KaMc/lphPsHqCHszbMOugnI6HHM+Z2fI9VL+R3viSnuS8rmy6WsT1jE="
