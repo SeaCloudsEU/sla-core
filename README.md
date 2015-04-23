@@ -1,6 +1,6 @@
 # SeaClouds SLA Core #
 
-[![Build Status](https://api.travis-ci.org/SeaCloudsEU/sla-core.svg?branch=master)](https://travis-ci.org/SeaCloudsEU/sla-core)
+[![Build Status](https://api.travis-ci.org/SeaCloudsEU/sla-core.svg?branch=develop)](https://travis-ci.org/SeaCloudsEU/sla-core)
 
 ##Description##
 
