@@ -1,5 +1,7 @@
 # SeaClouds SLA Core #
 
+[![Build Status](https://api.travis-ci.org/SeaCloudsEU/sla-core.svg?branch=master)](https://travis-ci.org/SeaCloudsEU/sla-core)
+
 ##Description##
 
 The SLA Core is an implementation of an SLA module, compliant with WS-Agreement.
