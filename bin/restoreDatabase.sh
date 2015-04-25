@@ -32,4 +32,4 @@ DB=$(get_var "db.name")
 USER=$(get_var "db.username")
 PWD=$(get_var "db.password")
 echo "Cleaning database: DB=$DB USER=$USER"
-mysql -p$PWD -u $USER $DB < sla-repository/src/main/resources/sql/atossla.sql
+mysql -p$PWD -u $USER $DB < sla-repository/src/main/resources/sql/10schema.sql

@@ -32,4 +32,4 @@ DB=$(get_var "db.name")
 USER=$(get_var "db.username")
 PWD=$(get_var "db.password")
 
-mysqldump -d -p -u "$USER" "$DB" > sla-repository/src/main/resources/sql/atossla.sql
+mysqldump -d -p -u "$USER" "$DB" > sla-repository/src/main/resources/sql/10schema.sql
