@@ -130,31 +130,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- to copy the war file to tomcat dir-->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<id>copy-war-file</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${tomcat.directory}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.build.directory}</directory>
-									<includes>
-										<include>**/*.war</include>
-									</includes>
-								</resource>
-							</resources>   
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 	<properties>
@@ -460,6 +435,11 @@
 			<groupId>eu.seaclouds-project</groupId>
 			<artifactId>sla-personalization</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.3</version>
 		</dependency>
 
 	</dependencies>
