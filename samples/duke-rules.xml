@@ -17,8 +17,8 @@
        limitations under the License.
 
 -->
-<monitoringRules>
-  <monitoringRule id="avgRespTime" label="avgRespTime" timeWindow="30" timeStep="30">
+<monitoringRules xmlns="http://www.modaclouds.eu/xsd/1.0/monitoring_rules_schema">
+  <monitoringRule id="avgRespTimeViolation" label="avgRespTime" timeWindow="30" timeStep="30">
     <collectedMetric metricName="ResponseTime">
       <parameter name="samplingProbability">1</parameter>
     </collectedMetric>
@@ -29,13 +29,13 @@
     <condition> METRIC &lt; 2 </condition>
     <actions>
       <action name="OutputMetric">
-        <parameter name="metric">AverageResponseTime</parameter>
+        <parameter name="metric">ResponseTimeViolated</parameter>
         <parameter name="value">METRIC</parameter>
         <parameter name="resourceId">ID</parameter>
       </action>
     </actions>
   </monitoringRule>
-  <monitoringRule id="availabilityRule" label="availabilityRule" timeWindow="30" timeStep="30">
+  <monitoringRule id="availabilityRuleViolation" label="availabilityRule" timeWindow="30" timeStep="30">
     <collectedMetric metricName="AppAvailable">
       <parameter name="samplingTime">60</parameter>
       <parameter name="retryPeriod">5</parameter>
@@ -49,7 +49,7 @@
     <condition> METRIC &gt; 0.99 </condition>
     <actions>
       <action name="OutputMetric">
-        <parameter name="metric">AverageAppAvailability</parameter>
+        <parameter name="metric">AppAvailableViolated</parameter>
         <parameter name="value">METRIC</parameter>
         <parameter name="resourceId">ID</parameter>
       </action>
