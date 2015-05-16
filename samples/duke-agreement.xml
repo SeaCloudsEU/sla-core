@@ -40,7 +40,7 @@
 				<wsag:ServiceLevelObjective>
 					<wsag:KPITarget>
 						<wsag:KPIName>ResponseTime</wsag:KPIName>
-						<wsag:CustomServiceLevel>{"constraint": "ResponseTimeViolated", "qos" : "ResponseTime LT 1.5"}</wsag:CustomServiceLevel>
+						<wsag:CustomServiceLevel>{"constraint": "ResponseTimeViolated EXISTS", "qos" : "ResponseTime LT 1.5"}</wsag:CustomServiceLevel>
 					</wsag:KPITarget>
 				</wsag:ServiceLevelObjective>
 			</wsag:GuaranteeTerm>
@@ -48,7 +48,7 @@
 				<wsag:ServiceLevelObjective>
 					<wsag:KPITarget>
 						<wsag:KPIName>AppAvailable</wsag:KPIName>
-						<wsag:CustomServiceLevel>{"constraint": "AppAvailableViolated", "qos" : "AppAvailable GT 0.99"}</wsag:CustomServiceLevel>
+						<wsag:CustomServiceLevel>{"constraint": "AppAvailableViolated EXISTS", "qos" : "AppAvailable GT 0.99"}</wsag:CustomServiceLevel>
 					</wsag:KPITarget>
 				</wsag:ServiceLevelObjective>
 			</wsag:GuaranteeTerm>
