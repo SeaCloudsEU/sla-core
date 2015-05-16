@@ -63,9 +63,15 @@ public class SeacloudsRest extends AbstractSLARest {
 
 	private static Logger logger = LoggerFactory.getLogger(SeacloudsRest.class);
 
+	/*
+	 * Base of monitoring manager /metrics endpoint. Something like http://localhost:8170/v1/metrics
+	 */
 	@Value("${MONITOR_METRICS_URL}")
 	private String metricsUrl;
-	
+
+	/*
+	 * Base of SLA Core component. Something like http://localhost:8080/sla-service
+	 */
 	@Value("${SLA_URL}")
 	private String slaUrl;
 	
@@ -152,10 +158,14 @@ public class SeacloudsRest extends AbstractSLARest {
 	public String rulesReady(@Context UriInfo uriInfo) {
 		String slaUrl = getSlaUrl(this.slaUrl, uriInfo);
 		String metricsUrl = getMetricsBaseUrl("", this.metricsUrl);
-
+		/*
+		 * Endpoint of the metrics receiver. Something like http://localhost:8080/metrics
+		 */
+		String slaMetricsUrl = getSlaMetricsUrl(slaUrl);
+		
 		List<IAgreement> agreements = agreementDAO.getAll();
 
-		ViolationSubscriber subscriber = new ViolationSubscriber(metricsUrl, slaUrl);
+		ViolationSubscriber subscriber = new ViolationSubscriber(metricsUrl, slaMetricsUrl);
 		for (IAgreement agreement : agreements) {
 			subscriber.subscribeObserver(agreement);
 		}
@@ -192,6 +202,10 @@ public class SeacloudsRest extends AbstractSLARest {
 		logger.debug("getMetricsBaseUrl(env={}, supplied={}) = {}", envBaseUrl, suppliedBaseUrl, result);
 		
 		return result;
+	}
+	
+	private String getSlaMetricsUrl(String slaUrl) {
+		return slaUrl + "/metrics";
 	}
 	
 }
