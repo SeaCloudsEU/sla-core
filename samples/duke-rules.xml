@@ -26,7 +26,7 @@
       <monitoredTarget class="Method"/>
     </monitoredTargets>
     <metricAggregation aggregateFunction="Average" groupingClass="Method"/>
-    <condition> METRIC &lt; 2 </condition>
+    <condition> METRIC &gt; 2000 </condition>
     <actions>
       <action name="OutputMetric">
         <parameter name="metric">ResponseTimeViolated</parameter>
@@ -46,7 +46,7 @@
     <monitoredTargets>
       <monitoredTarget class="InternalComponent" type="dukes-webapp"/>
     </monitoredTargets>
-    <condition> METRIC &gt; 0.99 </condition>
+    <condition> METRIC &lt; 0.99 </condition>
     <actions>
       <action name="OutputMetric">
         <parameter name="metric">AppAvailableViolated</parameter>

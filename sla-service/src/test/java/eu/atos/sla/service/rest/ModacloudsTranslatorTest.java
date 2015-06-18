@@ -59,7 +59,7 @@ public class ModacloudsTranslatorTest {
 
 	@Test
 	public void testTranslate() throws IOException {
-		String json = readFile("/violation_2.0.1.json");
+		String json = readFile("/violation_duke.json");
 		IConstraintEvaluator constraintEvaluator = new SimpleConstraintEvaluator();
 		
 		ModacloudsTranslator translator = new ModacloudsTranslator(constraintEvaluator);
@@ -67,12 +67,12 @@ public class ModacloudsTranslatorTest {
 		GuaranteeTerm term = new GuaranteeTerm();
 		term.setKpiName("responsetime");
 		term.setName("rt");
-		term.setServiceLevel("WinVMCPUUtilization NOT_EXISTS");
+		term.setServiceLevel("ResponseTimeViolated NOT_EXISTS");
 		agreement.setGuaranteeTerms(Arrays.asList(new IGuaranteeTerm[] { term}));
 		
 		Map<IGuaranteeTerm, List<IMonitoringMetric>> map = translator.translate(agreement, json);
 		
-		assertEquals(3, map.get(term).size());
+		assertEquals(1, map.get(term).size());
 	}
 	
 	@Test
