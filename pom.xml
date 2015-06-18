@@ -22,7 +22,7 @@
 	<groupId>eu.seaclouds-project</groupId>
 	<artifactId>sla</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<name>SLA parent</name>
 	<modules>
 		<module>sla-repository</module>
