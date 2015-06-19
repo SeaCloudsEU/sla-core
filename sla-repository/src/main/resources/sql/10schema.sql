@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.16, for Win64 (x86_64)
 --
--- Host: localhost    Database: atossla
+-- Host: localhost    Database: sc_sla
 -- ------------------------------------------------------
 -- Server version	5.6.16-log
 
@@ -31,7 +31,7 @@ CREATE TABLE `agreement` (
   `service_id` varchar(255) DEFAULT NULL,
   `text` longtext,
   `provider_id` bigint(20) NOT NULL,
-  `template_id` bigint(20) NOT NULL,
+  `template_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_b3upn8jbq7ryrj26mpc5hccf3` (`agreement_id`),
   KEY `FK_hlyajkn6gfqd9vd9u2ne74dbf` (`provider_id`),
@@ -290,4 +290,4 @@ CREATE TABLE `violation` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-30 16:53:44
+-- Dump completed on 2015-04-20 17:06:04

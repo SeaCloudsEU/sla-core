@@ -128,12 +128,14 @@ public class AgreementHelperE{
 					}
 					agreement.setProvider(provider);
 	
-					String templateUuid = agreement.getTemplate().getUuid();
-					ITemplate template = templateFromRepository(templateUuid);
-					if (template == null) {
-						throw new DBMissingHelperException("Template with id:"+ templateUuid+ " doesn't exist SLA Repository Database");
+					if (agreement.getTemplate() != null) {
+						String templateUuid = agreement.getTemplate().getUuid();
+						ITemplate template = templateFromRepository(templateUuid);
+						if (template == null) {
+							throw new DBMissingHelperException("Template with id:"+ templateUuid+ " doesn't exist SLA Repository Database");
+						}
+						agreement.setTemplate(template);
 					}
-					agreement.setTemplate(template);
 	
 					agreementStored = this.agreementDAO.save(agreement);
 					
