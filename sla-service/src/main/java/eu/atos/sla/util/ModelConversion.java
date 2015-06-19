@@ -233,9 +233,6 @@ public class ModelConversion implements IModelConverter {
 			eu.atos.sla.datamodel.bean.Template template = new eu.atos.sla.datamodel.bean.Template();
 			template.setUuid(context.getTemplateId());
 			agreement.setTemplate(template);
-		}else{
-			throw new ModelConversionException("Template field is mandatory");
-			
 		}
 		
 		if (context.getService() != null) {

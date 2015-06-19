@@ -46,4 +46,9 @@
 		</property>
 	</bean>
 
+	<bean class="eu.atos.sla.service.rest.ModacloudsTranslator">
+		<constructor-arg ref="constraintEvaluator" />
+	</bean>
+
+
 </beans>

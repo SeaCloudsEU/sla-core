@@ -60,9 +60,10 @@ import eu.atos.sla.datamodel.ITemplate;
 		@NamedQuery(name = Agreement.QUERY_ACTIVE_AGREEMENTS, query = "SELECT p FROM Agreement p where p.expirationDate > :actualDate "),
 		@NamedQuery(name = Agreement.QUERY_FIND_BY_TEMPLATEUUID_AND_CONSUMER, query = "SELECT p FROM Agreement p where (p.template.uuid = :templateUUID) AND (p.consumer = :consumerId)"),
 		@NamedQuery(name = Agreement.QUERY_SEARCH, query = "SELECT a FROM Agreement a "
+				+ "LEFT JOIN a.template t "
 				+ "WHERE (:providerId is null or a.provider.uuid = :providerId) "
 				+ "AND (:consumerId is null or a.consumer = :consumerId) "
-				+ "AND (:templateId is null or a.template.uuid = :templateId) "
+				+ "AND (:templateId is null or t.uuid = :templateId) "
 				+ "AND (:active is null "
 				+ "    or (:active = true and a.expirationDate > current_timestamp()) "
 				+ "    or (:active = false and a.expirationDate <= current_timestamp()))") })
@@ -142,7 +143,7 @@ public class Agreement implements IAgreement, Serializable {
 	}
 
 	@ManyToOne(targetEntity = Template.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "template_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "template_id", referencedColumnName = "id", nullable = true)
 	public ITemplate getTemplate() {
 		return template;
 	}

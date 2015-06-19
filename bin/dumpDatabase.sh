@@ -20,4 +20,16 @@ if [ "$0" != "bin/dumpDatabase.sh" ]; then
 	echo "Must be executed from project root"
 	exit 1
 fi
-mysqldump -d -p -u atossla atossla > sla-repository/src/main/resources/sql/atossla.sql
+
+function get_var() {
+  local result
+
+  result=$(grep "$1" configuration.properties | sed -e 's/.*= *\(.*\) *$/\1/') 
+  echo $result
+}
+
+DB=$(get_var "db.name")
+USER=$(get_var "db.username")
+PWD=$(get_var "db.password")
+
+mysqldump -d -p -u "$USER" "$DB" > sla-repository/src/main/resources/sql/10schema.sql
