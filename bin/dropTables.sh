@@ -15,6 +15,17 @@
 #    limitations under the License.
 #
 
-DROP=$(mysql -p"_atossla_" -u atossla atossla <<< "show tables" | grep -v "Tables" | sed -e's/\(.*\)/drop table \1; /')
+function get_var() {
+  local result
+
+  result=$(grep "$1" configuration.properties | sed -e 's/.*= *\(.*\) *$/\1/') 
+  echo $result
+}
+
+DB=$(get_var "db.name")
+USER=$(get_var "db.username")
+PWD=$(get_var "db.password")
+
+DROP=$(mysql -p"$PWD" -u "$USER" "$DB" <<< "show tables" | grep -v "Tables" | sed -e's/\(.*\)/drop table \1; /')
 SQL=$(echo "SET FOREIGN_KEY_CHECKS=0;" && echo $DROP)
-echo "$SQL" | mysql -p -u atossla atossla
+echo "$SQL" | mysql -p -u "$USER" "$DB"
