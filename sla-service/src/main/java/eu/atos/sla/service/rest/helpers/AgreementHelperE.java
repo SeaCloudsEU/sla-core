@@ -102,17 +102,26 @@ public class AgreementHelperE{
 		return templateDAO.getByUuid(templateUUID);
 	}
 	
+	public String createAgreement(Agreement agreementXML, String originalSerializedAgreement) 
+			throws DBMissingHelperException, DBExistsHelperException, InternalHelperException, ParserHelperException {
+		
+		return createAgreement(agreementXML, originalSerializedAgreement, "");
+	}
 	
-	public String createAgreement(Agreement agreementXML, String originalSerializedAgreement) throws DBMissingHelperException, DBExistsHelperException, InternalHelperException, ParserHelperException {
+	public String createAgreement(Agreement agreementXML, String originalSerializedAgreement, String agreementId) 
+			throws DBMissingHelperException, DBExistsHelperException, InternalHelperException, ParserHelperException {
 		logger.debug("StartOf createAgreement payload:{}", originalSerializedAgreement);
 		try{
 			IAgreement agreementStored = null;
 	
 			if (agreementXML != null) {
 	
-				// add field AggrementId if it doesn't exist
-				if (agreementXML.getAgreementId() == null) {
-					String agreementId = UUID.randomUUID().toString();
+				boolean setId = agreementId != null && !"".equals(agreementId);
+				// add field AggrementId if it doesn't exist or agreement must have wsag:AgreementId=agreementId
+				if (agreementXML.getAgreementId() == null || setId) {
+					if (!setId) {
+						agreementId = UUID.randomUUID().toString();
+					}
 					logger.debug("createAgreement agreement has no uuid, {} will be assigned", agreementId); 
 					originalSerializedAgreement = setAgreementIdInSerializedAgreement(originalSerializedAgreement, agreementId);
 					agreementXML.setAgreementId(agreementId);
@@ -275,10 +284,7 @@ public class AgreementHelperE{
 	}
 	
 	private String setAgreementIdInSerializedAgreement(String serializedAgreement, String agreementId){
-		return serializedAgreement.replaceAll(
-						"<wsag:Agreement xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\" xmlns:sla=\"http://sla.atos.eu\">",
-						"<wsag:Agreement xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\" xmlns:sla=\"http://sla.atos.eu\" wsag:AgreementId=\""+ agreementId + "\">");
-		 
+		 return AgreementIdModifier.run(serializedAgreement, agreementId);
 	}
 
 	public List<IAgreement> getAgreementsPerTemplateAndConsumer(String consumerId, String templateUUID) {
@@ -288,7 +294,13 @@ public class AgreementHelperE{
 		return agreements;
 	}
 
-
+	public static class AgreementIdModifier {
+		public static String run(String serializedAgreement, String agreementId) {
+			return serializedAgreement.replaceAll(
+					"<wsag:Agreement[^>]*>",
+					"<wsag:Agreement xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\" xmlns:sla=\"http://sla.atos.eu\" wsag:AgreementId=\""+ agreementId + "\">");			
+		}
+	}
 	public static class AgreementStatusCalculator {
 		
 		

@@ -24,6 +24,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -45,6 +46,7 @@ import eu.atos.sla.dao.IProviderDAO;
 import eu.atos.sla.datamodel.IAgreement;
 import eu.atos.sla.datamodel.IProvider;
 import eu.atos.sla.datamodel.bean.Provider;
+import eu.atos.sla.enforcement.IEnforcementService;
 import eu.atos.sla.modaclouds.ViolationSubscriber;
 import eu.atos.sla.parser.IParser;
 import eu.atos.sla.parser.ParserException;
@@ -87,6 +89,9 @@ public class SeacloudsRest extends AbstractSLARest {
 	@Resource(name="agreementXmlParser")
 	IParser<Agreement> xmlParser;
 	
+	@Autowired
+	private IEnforcementService enforcementService;
+
 	@GET
 	public String getRoot() {
 		return "root";
@@ -114,7 +119,8 @@ public class SeacloudsRest extends AbstractSLARest {
 	@POST
 	@Path("agreements")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response createAgreement(@Context UriInfo uriInfo, FormDataMultiPart form) 
+	public Response createAgreement(@Context UriInfo uriInfo, FormDataMultiPart form,
+			@QueryParam("agreementId") String agreementId) 
 			throws ParserException, InternalException {
 		
 		FormDataBodyPart slaPart = form.getField("sla");
@@ -134,7 +140,7 @@ public class SeacloudsRest extends AbstractSLARest {
 				provider.setName(providerUuid);
 				provider = providerDAO.save(provider);
 			}
-			id = agreementHelper.createAgreement(a, slaPayload);
+			id = agreementHelper.createAgreement(a, slaPayload, agreementId != null? agreementId : "");
 			location = buildResourceLocation(uriInfo.getAbsolutePath().toString() ,id);
 		} catch (DBMissingHelperException e) {
 			throw new InternalException(e.getMessage());
@@ -168,6 +174,7 @@ public class SeacloudsRest extends AbstractSLARest {
 		ViolationSubscriber subscriber = new ViolationSubscriber(metricsUrl, slaMetricsUrl);
 		for (IAgreement agreement : agreements) {
 			subscriber.subscribeObserver(agreement);
+			enforcementService.startEnforcement(agreement.getAgreementId());
 		}
 		return "";
 	}

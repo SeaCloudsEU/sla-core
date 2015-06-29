@@ -80,5 +80,33 @@ public class AgreementHelperETest {
 		}
 		return result;
 	}
+	
+	@Test
+	public void changeIdInAgreementWithId() {
+		String xml = "<wsag:Agreement xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\"" +	
+			"xmlns:sla=\"http://sla.atos.eu\"></wsag:Agreement>";
+		
+		String newId = "fixed";
+		String result = AgreementHelperE.AgreementIdModifier.run(xml, newId);
+		assertTrue(result.contains("wsag:AgreementId=\"" + newId + "\""));
+	}
+
+	@Test
+	public void changeIdInAgreementWithoutId() {
+		String xml;
+		String newId = "fixed";
+		String result;
+		
+		xml = "<wsag:Agreement xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\"" +	
+				"xmlns:sla=\"http://sla.atos.eu\" wsag:AgreementId=\"id\"></wsag:Agreement>";
+		result = AgreementHelperE.AgreementIdModifier.run(xml, newId);
+		assertTrue(result.contains("wsag:AgreementId=\"" + newId + "\""));
+
+		xml = "<wsag:Agreement wsag:AgreementId=\"id\" xmlns:wsag=\"http://www.ggf.org/namespaces/ws-agreement\"" +	
+				"xmlns:sla=\"http://sla.atos.eu\" wsag:deleted=\"\" ></wsag:Agreement>";
+		result = AgreementHelperE.AgreementIdModifier.run(xml, newId);
+		assertTrue(result.contains("wsag:AgreementId=\"" + newId + "\""));
+		System.out.println(result);
+	}
 
 }

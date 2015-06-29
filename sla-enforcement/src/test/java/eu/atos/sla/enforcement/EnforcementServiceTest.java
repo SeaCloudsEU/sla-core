@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -352,6 +353,7 @@ public class EnforcementServiceTest  {
 		agreement.setAgreementId(UUID.randomUUID().toString());
 		agreement.setProvider(provider);
 		agreement.setTemplate(template);
+		agreement.setGuaranteeTerms(Collections.<IGuaranteeTerm>emptyList());
 		return agreement;
 	}
 	
