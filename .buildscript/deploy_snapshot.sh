@@ -21,7 +21,7 @@
 # http://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci/
 
 SLUG="SeaCloudsEU/sla-core"
-BRANCH="master"
+BRANCH="develop"
 
 set -e
 
