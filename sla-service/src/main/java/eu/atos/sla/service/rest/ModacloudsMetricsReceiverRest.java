@@ -55,7 +55,7 @@ public class ModacloudsMetricsReceiverRest extends eu.atos.sla.service.rest.Abst
 	private IAgreementDAO agreementDao;
 	
 	@Autowired
-	private ModacloudsTranslator translator;
+	private Tower4CloudsTranslator translator;
 	
 	@GET
 	public Response getRoot() {
@@ -79,4 +79,11 @@ public class ModacloudsMetricsReceiverRest extends eu.atos.sla.service.rest.Abst
 		return buildResponse(HttpStatus.ACCEPTED, "Metrics received");
 	}
 	
+	@POST
+	@Path("{metric}/observers")
+	public String fakeMetrics(String body) {
+		logger.debug("body={}", body);
+		return "Succesful attach";
+	}
+
 }

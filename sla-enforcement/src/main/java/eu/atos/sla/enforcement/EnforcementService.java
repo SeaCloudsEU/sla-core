@@ -135,6 +135,7 @@ public class EnforcementService implements IEnforcementService {
 
 	@Override
 	public boolean startEnforcement(String agreementId) {
+		logger.debug("startEnforcement({})", agreementId);
 		IEnforcementJob job = enforcementJobDAO.getByAgreementId(agreementId);
 
 		if (job == null) {
@@ -142,6 +143,13 @@ public class EnforcementService implements IEnforcementService {
 		}
 		job.setEnabled(true);
 		enforcementJobDAO.save(job);
+		IAgreement agreement = agreementDAO.getByAgreementId(agreementId);
+		for (IGuaranteeTerm term : agreement.getGuaranteeTerms()) {
+			if (term.getStatus() == null || GuaranteeTermStatusEnum.NON_DETERMINED.equals(term.getStatus())) {
+				term.setStatus(GuaranteeTermStatusEnum.FULFILLED);
+			}
+			guaranteeTermDAO.save(term);
+		}
 		
 		return true;
 	}
