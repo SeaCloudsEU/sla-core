@@ -17,6 +17,7 @@
 package eu.atos.sla.evaluation.guarantee;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import eu.atos.sla.datamodel.IAgreement;
@@ -33,7 +34,7 @@ public class DummyBusinessValuesEvaluator implements IBusinessValuesEvaluator {
 
 	@Override
 	public List<ICompensation> evaluate(IAgreement agreement,
-			IGuaranteeTerm term, List<IViolation> violations) {
+			IGuaranteeTerm term, List<IViolation> violations, Date now) {
 
 		return Collections.emptyList();
 	}

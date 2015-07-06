@@ -41,14 +41,6 @@
 		p:driverClassName="org.hsqldb.jdbcDriver" p:url="jdbc:hsqldb:mem:atossla;sql.syntax_mys=true"
 		p:username="sa" p:password="" />
 
-	<!--
-	<bean id="dataSource.mysql"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://localhost:3306/${db.name}"
-		p:username="${db.username}" p:password="${db.password}" />
-	-->
-
-
 	<bean id="transactionTemplate"
 		class="org.springframework.transaction.support.TransactionTemplate">
 		<constructor-arg ref="transactionManager" />

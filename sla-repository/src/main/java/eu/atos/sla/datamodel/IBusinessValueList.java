@@ -35,8 +35,6 @@ public interface IBusinessValueList {
 	 */
 	public int getImportance();
 	
-	public String getCustomBusinessValue();
-	
 	public List<IPenaltyDefinition> getPenalties();
 	
 	public void addPenalty(IPenaltyDefinition penalty);

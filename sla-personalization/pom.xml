@@ -18,7 +18,7 @@
 
 -->
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>eu.seaclouds-project</groupId>
@@ -30,12 +30,6 @@
 	<packaging>jar</packaging>  
 	<name>SLA Project Personalization</name>
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- import SLA projects -->
 		<dependency>
 			<groupId>eu.seaclouds-project</groupId>
@@ -61,7 +55,7 @@
 			<version>${jersey-version}</version>
 		</dependency>
 	</dependencies>
-    <build>
+	<build>
 		<filters>
 			<filter>../configuration.properties</filter>
 		</filters>
@@ -75,17 +69,11 @@
 				</includes>
 			</resource>
 		</resources>	
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

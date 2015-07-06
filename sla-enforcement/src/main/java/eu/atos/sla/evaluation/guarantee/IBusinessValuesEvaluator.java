@@ -16,6 +16,7 @@
  */
 package eu.atos.sla.evaluation.guarantee;
 
+import java.util.Date;
 import java.util.List;
 
 import eu.atos.sla.datamodel.IAgreement;
@@ -37,7 +38,9 @@ public interface IBusinessValuesEvaluator {
 	 * @param agreement agreement being evaluated.
 	 * @param term of the agreement being evaluated.
 	 * @param violations detected in the service level evaluation.
+	 * @param now the evaluation period ends at <code>now</code>.
 	 * @return list of compensations.
 	 */
-	List<? extends ICompensation> evaluate(IAgreement agreement, IGuaranteeTerm term, List<IViolation> violations);
+	List<? extends ICompensation> evaluate(
+			IAgreement agreement, IGuaranteeTerm term, List<IViolation> violations, Date now);
 }

@@ -17,6 +17,7 @@
 package eu.atos.sla.datamodel;
 
 
+
 public interface ITemplate {
 
 	/*
@@ -45,4 +46,18 @@ public interface ITemplate {
 	 */
 	public String getServiceId();
 	public void setServiceId(String serviceId);
+	
+	/** 
+	 * Name from the template
+	 */
+	public String getName();
+	public void setName(String name);
+	
+	
+	/** 
+	 * Provider from the template
+	 */
+	public IProvider getProvider();
+	public void setProvider(IProvider provider); 
+	
 }

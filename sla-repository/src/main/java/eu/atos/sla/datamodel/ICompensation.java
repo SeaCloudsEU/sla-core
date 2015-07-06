@@ -25,6 +25,11 @@ public interface ICompensation {
 	public interface IPenalty extends ICompensation {
 		
 		IPenaltyDefinition getDefinition();
+
+		/**
+		 * Last violation that generated this penalty.
+		 */
+		IViolation getViolation();
 	}
 	
 	public interface IReward extends ICompensation {
@@ -52,16 +57,8 @@ public interface ICompensation {
 	 */
 	Date getDatetime();
 
-	/*
-	 * TODO: finish
+	/**
+	 * Name of the kpi that has generated this compensation.
 	 */
-//	/**
-//	 * If not null, violation that generated this penalty; otherwise, this is a reward.
-//	 */
-//	IViolation getViolation();
-	
-//	/**
-//	 * Compensation info
-//	 */
-//	ICompensationDefinition getDefinition();
+	String getKpiName();
 }
