@@ -16,12 +16,13 @@ import org.springframework.beans.factory.annotation.Value;
 import eu.atos.sla.datamodel.IAgreement;
 import eu.atos.sla.datamodel.IGuaranteeTerm;
 import eu.atos.sla.datamodel.IViolation;
-import eu.atos.sla.evaluation.IAgreementEvaluator;
+import eu.atos.sla.evaluation.AgreementEvaluator;
 import eu.atos.sla.evaluation.constraint.IConstraintEvaluator;
-import eu.atos.sla.evaluation.guarantee.IGuaranteeTermEvaluator.GuaranteeTermEvaluationResult;
+import eu.atos.sla.evaluation.guarantee.GuaranteeTermEvaluator.GuaranteeTermEvaluationResult;
 import eu.atos.sla.monitoring.IMetricsRetriever;
 import eu.atos.sla.monitoring.IMetricsRetrieverV2;
 import eu.atos.sla.monitoring.IMonitoringMetric;
+import eu.atos.sla.notification.INotifierManager;
 
 
 
@@ -61,7 +62,7 @@ import eu.atos.sla.monitoring.IMonitoringMetric;
  * 
  * @author rsosa
  */
-public class AgreementEnforcement  {
+public class AgreementEnforcement {
 	private static Logger logger = LoggerFactory.getLogger(AgreementEnforcement.class);
 	private static final String POLL_INTERVAL = "eu.atos.sla.enforcement.poll.interval.mseconds";
 
@@ -72,9 +73,12 @@ public class AgreementEnforcement  {
 
 	@Autowired
 	private IEnforcementService service;
-	
+
+	@Autowired
+	INotifierManager notifierManager;
+
 	private int maxRetrievedResults = MAX_RETRIEVED_RESULTS;
-	private IAgreementEvaluator agreementEvaluator;
+	private AgreementEvaluator agreementEvaluator;
 	private IMetricsRetriever retriever;
 	private IConstraintEvaluator constraintEval;
 
@@ -82,14 +86,15 @@ public class AgreementEnforcement  {
 	private String pollIntervalString;
 	private long pollInterval;
 	
+	
 	public AgreementEnforcement() {
 	}
-
-	
 
 	/**
 	 * Enforce an agreement that was last enforced at <code>since</code>. The enforcement process must retrieve
 	 * the metrics since that date and validate them, raising violations if applicable.
+	 * 
+	 * This method is intended to be used when the metric data has to be pulled from the Monitoring.
 	 * 
 	 * @param agreement Agreement to enforce.
 	 * @param since Last time the agreement was enforced.
@@ -116,6 +121,9 @@ public class AgreementEnforcement  {
 
 	/**
 	 * Enforce an agreement given the new metrics that has occurred since the last enforcement.
+	 * 
+	 * This method is intended to be called when the Monitoring pushes the metrics to be checked.
+	 * 
 	 * @param agreement Agreement to enforce.
 	 * @param metricsMap new metrics to evaluate.
 	 */
@@ -128,11 +136,14 @@ public class AgreementEnforcement  {
 				agreementEvaluator.evaluate(agreement, metricsMap);
 		
 		service.saveEnforcementResult(agreement, evaluationResult);
+		
+		notifierManager.addToBeNotified(agreement, evaluationResult);
 	}
 	
 	/**
 	 * Enforce an agreement when violations are provided by an external smart monitoring.
 	 * 
+	 * This method is intended to be used when Monitoring pushes the raised violations.
 	 */
 	public void enforceBusiness(IAgreement agreement,
 			Map<IGuaranteeTerm, List<IViolation>> violationsMap) {
@@ -140,15 +151,12 @@ public class AgreementEnforcement  {
 		logger.debug("enforceBusiness(agreement={})", agreement.getAgreementId());
 		checkInitialized(false);
 		
-//		Map<IGuaranteeTerm, List<IViolation>> violations = 
-//				agreementEval.evaluateMetrics(agreement, metricsMap);
-//		
-//		Map<IGuaranteeTerm, List<ICompensation>> compensations = 
-//				agreementEval.evaluateViolations(agreement, violations);
-//		
-//		Map<IGuaranteeTerm, GuaranteeTermEvaluationResult> evaluationResult;
-//		
-//		service.saveEnforcementResult(agreement, evaluationResult);
+		Map<IGuaranteeTerm, GuaranteeTermEvaluationResult> evaluationResult = 
+				agreementEvaluator.evaluateBusiness(agreement, violationsMap);
+		
+		service.saveEnforcementResult(agreement, evaluationResult);
+		
+		notifierManager.addToBeNotified(agreement, evaluationResult);
 	}
 	
 	private void checkInitialized(boolean checkRetriever) {
@@ -284,7 +292,7 @@ public class AgreementEnforcement  {
 	}
 
 	// variable set by configuration file
-	public void setAgreementEvaluator(IAgreementEvaluator agreementEval) {
+	public void setAgreementEvaluator(AgreementEvaluator agreementEval) {
 		this.agreementEvaluator = agreementEval;
 	}
 
@@ -302,8 +310,6 @@ public class AgreementEnforcement  {
 	public void setConstraintEvaluator(IConstraintEvaluator constraintEval) {
 		this.constraintEval = constraintEval;
 	}
-
-
 
 	private String iso8601(Date date) {
 		

@@ -14,32 +14,36 @@
 
 	<context:component-scan base-package="eu.atos.sla"/>
 	<context:annotation-config/>
-	<import resource="classpath*:serializers-context.xml"/>
-	<import resource="classpath*:ord-context.xml"/>
+	<import resource="classpath*:tools-context.xml"/>
+	<import resource="classpath*:repository-context.xml"/>
 	<import resource="classpath*:enforcement-context.xml"/>
 	<import resource="classpath*:personalization-context.xml"/>
 	<import resource="classpath*:security-context.xml"/>
 	
-	
-	
-	<bean id="converterBean" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<bean id="modelConverter" class="eu.atos.sla.util.ModelConversion">
+		<property name="businessValueListParser">
+			<bean class="${converter.businessparser.class}"/>
+		</property>
+	</bean>
+
+	<!-- to review bean id="converterBean" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
 				<ref bean="marshallingHttpMessageConverter"/>
 				<ref bean="jsonMessageConverter"/>
 			</list>
 		</property>
-	</bean>
+	</bean-->
 
 	<!--to convert xml -->
-	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+	<!--bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 		<property name="marshaller"   ref="castorMarshaller"/>
 		<property name="unmarshaller" ref="castorMarshaller"/>
 	</bean>
-	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"/>	
+	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"/-->	
 
 	<!--to convert json -->
-	<bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	<!--bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/-->
 
 	<bean class="eu.atos.sla.monitoring.simple.SimpleMetricsTranslator">
 		<constructor-arg ref="constraintEvaluator" />

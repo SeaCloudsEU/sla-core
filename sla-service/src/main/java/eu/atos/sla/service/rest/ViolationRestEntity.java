@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import eu.atos.sla.parser.data.Violation;
 import eu.atos.sla.service.rest.exception.InternalException;
+import eu.atos.sla.service.rest.exception.NotFoundException;
 import eu.atos.sla.service.rest.helpers.ViolationHelperE;
 import eu.atos.sla.service.rest.helpers.exception.ParserHelperException;
 import eu.atos.sla.service.types.DateParam;
@@ -99,10 +100,14 @@ public class ViolationRestEntity extends AbstractSLARest {
 	 */
 	@GET
 	@Path("{uuid}")
-	public Violation getViolationByUuid(@PathParam("uuid") UUID violationUuid) {
+	public Violation getViolationByUuid(@PathParam("uuid") UUID violationUuid) throws NotFoundException{
 		logger.debug("StartOf getViolationByUuid - REQUEST for /violations/{}", violationUuid);
 		ViolationHelperE violationRestHelper = getViolationHelper();
 		Violation violation = violationRestHelper.getViolationByUUID(violationUuid);
+		if (violation==null){
+			logger.info("getViolationByUuid NotFoundException: There is no violation with id " + violationUuid + " in the SLA Repository Database");			
+			throw new NotFoundException("There is no violation with id " + violationUuid + " in the SLA Repository Database");		
+		}
 		logger.debug("EndOf getViolationByUuid");
 		return violation;
 	}
@@ -158,7 +163,9 @@ public class ViolationRestEntity extends AbstractSLARest {
 			@QueryParam("providerId") String providerUuid,
 			@QueryParam("begin") DateParam begin, @QueryParam("end") DateParam end) throws InternalException{
 
-		logger.debug("StartOf  getViolations REQUEST for /violations/?agreementId=\"\"&guaranteeTerm=\"\"&providerUuid=\"\"&begin=\"\"&end");
+		logger.debug("StartOf  getViolations REQUEST for "
+				+ "/violations/?agreementId={}&guaranteeTerm={}&providerId={}&begin={}&end={}",
+				agreementId, guaranteeTerm, providerUuid, begin, end);
 
 		Date dBegin = (begin == null)? null : begin.getDate();
 		Date dEnd = (end == null)? null : end.getDate();
