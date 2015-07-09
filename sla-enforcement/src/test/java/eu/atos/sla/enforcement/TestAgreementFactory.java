@@ -81,14 +81,19 @@ public class TestAgreementFactory {
 		);
 		t.setViolations(new ArrayList<IViolation>());
 		
-		IBusinessValueList businessValueList = new BusinessValueList(0, penalties, "");
+		IBusinessValueList businessValueList = new BusinessValueList(0, penalties);
 		t.setBusinessValueList(businessValueList);
 		return t;
 	}
 
 	public static IViolation newViolation(IAgreement agreement, IGuaranteeTerm term, IPolicy policy) {
 		
-		IViolation result = new Violation(agreement, term, policy, "", "", new Date());
+		return newViolation(agreement, term, policy, new Date());
+	}
+	
+	public static IViolation newViolation(IAgreement agreement, IGuaranteeTerm term, IPolicy policy, Date datetime) {
+		
+		IViolation result = new Violation(agreement, term, policy, "", "", datetime);
 		return result;
 	}
 }

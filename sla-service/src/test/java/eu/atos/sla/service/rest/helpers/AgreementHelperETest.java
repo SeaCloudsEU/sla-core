@@ -16,8 +16,11 @@
  */
 package eu.atos.sla.service.rest.helpers;
 
-import static eu.atos.sla.datamodel.IGuaranteeTerm.GuaranteeTermStatusEnum.*;
-import static org.junit.Assert.*;
+import static eu.atos.sla.datamodel.IGuaranteeTerm.GuaranteeTermStatusEnum.FULFILLED;
+import static eu.atos.sla.datamodel.IGuaranteeTerm.GuaranteeTermStatusEnum.NON_DETERMINED;
+import static eu.atos.sla.datamodel.IGuaranteeTerm.GuaranteeTermStatusEnum.VIOLATED;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;

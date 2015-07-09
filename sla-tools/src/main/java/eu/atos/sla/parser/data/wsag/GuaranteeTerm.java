@@ -34,6 +34,8 @@ public class GuaranteeTerm {
 	private ServiceLevelObjective serviceLevelObjective;
 	@XmlElement(name = "QualifyingCondition")
 	private String qualifyingCondition;
+	@XmlElement(name="BusinessValueList")
+	private BusinessValueList businessValueList;
 
 	public GuaranteeTerm() {
 	}
@@ -71,5 +73,11 @@ public class GuaranteeTerm {
 		this.qualifyingCondition = qualifyingCondition;
 	}
 
+	public BusinessValueList getBusinessValueList() {
+		return businessValueList;
+	}
 	
+	public void setBusinessValueList(BusinessValueList businessValueList) {
+		this.businessValueList = businessValueList;
+	}
 }

@@ -22,24 +22,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import eu.atos.sla.dao.IBreachDAO;
+import eu.atos.sla.dao.IViolationDAO;
+import eu.atos.sla.dao.IViolationDAO.SearchParameters;
 import eu.atos.sla.datamodel.IAgreement;
 import eu.atos.sla.datamodel.IBreach;
+import eu.atos.sla.datamodel.IViolation;
 
 /**
- * Uses a BreachDao to implement the IBreachRepository functionality. 
+ * Implements the access to a repository that stores breaches and compensations.
  * @author rsosa
  *
  */
-public class BreachRepository implements IBreachRepository {
+public class Repository implements IBreachRepository, IViolationRepository {
 
 	@Autowired
 	IBreachDAO breachDao;
+
+	@Autowired
+	IViolationDAO violationDao;
 	
-	public BreachRepository() {
+	public Repository() {
 	}
 
 	@Override
-	public List<IBreach> getByTimeRange(IAgreement agreement, String kpiName, Date begin, Date end) {
+	public List<IBreach> getBreachesByTimeRange(IAgreement agreement, String kpiName, Date begin, Date end) {
 
 		List<IBreach> result = breachDao.getByTimeRange(agreement, kpiName, begin, end);
 		return result;
@@ -54,4 +60,22 @@ public class BreachRepository implements IBreachRepository {
 		}
 	}
 
+	@Override
+	public List<IViolation> getViolationsByTimeRange(IAgreement agreement,
+			String guaranteeTermName, Date begin, Date end) {
+		SearchParameters params = newSearchParameters(agreement, guaranteeTermName, begin, end);
+		List<IViolation> result = violationDao.search(params);
+		
+		return result;
+	}
+
+	private SearchParameters newSearchParameters(IAgreement agreement,
+			String guaranteeTermName, Date begin, Date end) {
+		SearchParameters params = new SearchParameters();
+		params.setAgreementId(agreement.getAgreementId());
+		params.setGuaranteeTermName(guaranteeTermName);
+		params.setBegin(begin);
+		params.setEnd(end);
+		return params;
+	}
 }

@@ -25,11 +25,6 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true"/>
 	</bean>
 	
-	<bean 
-		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-		<property name="location" value="classpath:seaclouds.properties"/>
-		<property name="ignoreUnresolvablePlaceholders" value="false" />
-	</bean>
 
 	<bean id="agreementEnforcement" class="eu.atos.sla.enforcement.AgreementEnforcement">
 		<property name="constraintEvaluator" ref="constraintEvaluator"/>

@@ -43,6 +43,7 @@ Create a user:
 
 	mysql> CREATE USER atossla@localhost IDENTIFIED BY '_atossla_';
 	mysql> GRANT ALL PRIVILEGES ON atossla.* TO atossla@localhost; -- * optional WITH GRANT OPTION;
+
 From command prompt, create needed tables:
 
 	$ mvn test exec:java -f sla-repository/pom.xml
@@ -84,6 +85,13 @@ Several parameters can be configured through this file.
    By default, wsag standard parsers are have been implemented and configured in the file. Also dateformat can be 
    configured.
 1. brooklyn.url. Url where Brooklyn is deployed.
+
+If you're creating the database using the command _mvn test exec:java -f sla-repository/pom.xml_ please make sure that you configure properly sla-repository\src\main\resources\META-INF\persistence.xml. Make sure you're setting the username, password and connection url with the proper parameters.
+
+	<property name="hibernate.connection.username" value="atossla" />
+	<property name="hibernate.connection.password" value="_atossla_" />
+	<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/atossla" />
+	
 
 ## <a name="compiling"> Compiling </a> ##
 	

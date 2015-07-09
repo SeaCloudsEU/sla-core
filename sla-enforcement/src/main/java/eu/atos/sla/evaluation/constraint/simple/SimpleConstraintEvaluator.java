@@ -31,6 +31,7 @@ import eu.atos.sla.evaluation.IMetricsValidator;
 import eu.atos.sla.evaluation.constraint.IConstraintEvaluator;
 import eu.atos.sla.monitoring.IMonitoringMetric;
 
+@SuppressWarnings("deprecation")
 public class SimpleConstraintEvaluator implements IMetricsValidator, IConstraintEvaluator {
 	private static Logger logger = LoggerFactory.getLogger(SimpleConstraintEvaluator.class);
 	

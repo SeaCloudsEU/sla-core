@@ -13,8 +13,15 @@
 	<context:component-scan base-package="eu.atos.sla" />
 	<context:annotation-config/>
 	
-	<import resource="classpath*:ord-test-context.xml" />
+	<import resource="classpath*:repository-test-context.xml" />
 	<import resource="classpath*:enforcement-test-context.xml" />
-	<import resource="classpath*:serializers-test-context.xml" />
-	<import resource="classpath*:personalization-test-context.xml"/>
+	<import resource="classpath*:tools-test-context.xml" />
+	<import resource="classpath*:personalization-context.xml"/>
+	
+	<bean id="modelConverter" class="eu.atos.sla.util.ModelConversion">
+		<property name="businessValueListParser">
+			<bean class="eu.atos.sla.util.BusinessValueListParser"/>
+		</property>
+	</bean>
+
 </beans>

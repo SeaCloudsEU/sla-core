@@ -28,6 +28,7 @@ CREATE TABLE `agreement` (
   `consumer` varchar(255) DEFAULT NULL,
   `expiration_time` datetime DEFAULT NULL,
   `metrics_eval_end` tinyint(1) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `service_id` varchar(255) DEFAULT NULL,
   `text` longtext,
   `provider_id` bigint(20) NOT NULL,
@@ -70,7 +71,6 @@ DROP TABLE IF EXISTS `business_value_list`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `business_value_list` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `custom_business_value` varchar(255) NOT NULL,
   `importance` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -133,10 +133,17 @@ CREATE TABLE `penalty` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `agreement_id` varchar(255) DEFAULT NULL,
   `datetime` datetime DEFAULT NULL,
+  `kpi_name` varchar(255) DEFAULT NULL,
   `uuid` varchar(255) DEFAULT NULL,
   `definition_id` bigint(20) NOT NULL,
+  `violation_id` bigint(20) NOT NULL,
+  `guarantee_term_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_s4japyqgwxvss8e63ejryo4js` (`definition_id`),
+  KEY `FK_ecbrf8mo6b45v7s2ilcpb1qb6` (`violation_id`),
+  KEY `FK_v8in0arhs3ff1i109d9ftxbm` (`guarantee_term_id`),
+  CONSTRAINT `FK_v8in0arhs3ff1i109d9ftxbm` FOREIGN KEY (`guarantee_term_id`) REFERENCES `guarantee_term` (`id`),
+  CONSTRAINT `FK_ecbrf8mo6b45v7s2ilcpb1qb6` FOREIGN KEY (`violation_id`) REFERENCES `violation` (`id`),
   CONSTRAINT `FK_s4japyqgwxvss8e63ejryo4js` FOREIGN KEY (`definition_id`) REFERENCES `penaltydefinition` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -150,9 +157,11 @@ DROP TABLE IF EXISTS `penaltydefinition`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `penaltydefinition` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
   `number` int(11) NOT NULL,
   `kind` varchar(255) NOT NULL,
   `time_interval` datetime NOT NULL,
+  `validity` varchar(255) NOT NULL,
   `value_expression` varchar(255) NOT NULL,
   `value_unit` varchar(255) NOT NULL,
   `business_value_id` bigint(20) DEFAULT NULL,
@@ -224,10 +233,11 @@ DROP TABLE IF EXISTS `template`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `template` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
   `service_id` varchar(255) DEFAULT NULL,
   `text` longtext NOT NULL,
   `uuid` varchar(255) NOT NULL,
-  `provider_id` bigint(20) DEFAULT NULL,
+  `provider_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_m0a0t99pnntf75psmk1lptr3n` (`uuid`),
   KEY `FK_5p28ldeg0v7loq063g2s9gykx` (`provider_id`),
